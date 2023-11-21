@@ -48,24 +48,24 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser):
-    id = models.BigAutoField(primary_key=True, db_column="fld_ai_id")
+    id = models.BigAutoField(primary_key=True, db_column="id")
     name = models.CharField(
         max_length=100,  default="", db_column="name")
     address = models.CharField(
-        max_length=255, default="", db_column="fld_address")
+        max_length=255, default="", db_column="address")
     email = models.EmailField(
         verbose_name='Email',
         max_length=100,
-        unique=True, db_column="fld_email")
+        unique=True, db_column="email")
     mobile = models.CharField(
-        max_length=100, unique=True, db_column="fld_mobile")
-    password = models.CharField(max_length=255, db_column="fld_password")
-    raw_password = models.CharField(max_length=25, default="", db_column="fld_raw_password")
-    follows = models.ManyToManyField('self', related_name='followers', symmetrical=False, db_column="fld_followers", db_table='tbl_user_follows')
+        max_length=100, unique=True, db_column="mobile")
+    password = models.CharField(max_length=255, db_column="password")
+    raw_password = models.CharField(max_length=25, default="", db_column="raw_password")
+    follows = models.ManyToManyField('self', related_name='followers', symmetrical=False, db_column="followers", db_table='user_follows')
     created_datetime = models.DateTimeField(
-        auto_now_add=True, blank=True, null=True, db_column="fld_created_datetime")
-    updated_at = models.DateTimeField(auto_now=True, db_column="fld_updated_at")
-    is_admin = models.BooleanField(default=False, db_column="fld_is_admin")
+        auto_now_add=True, blank=True, null=True, db_column="created_datetime")
+    updated_at = models.DateTimeField(auto_now=True, db_column="updated_at")
+    is_admin = models.BooleanField(default=False, db_column="is_admin")
     last_login = models.DateTimeField(
         blank=True, null=True, verbose_name='last login', db_column="last_login")
 
@@ -98,6 +98,6 @@ class User(AbstractBaseUser):
         super(User, self).save(*args, **kwargs)
 
     class Meta:
-        db_table = 'tbl_user'
+        db_table = 'user'
         verbose_name = "users"
 

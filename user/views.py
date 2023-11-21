@@ -69,7 +69,7 @@ class CustomLogoutView(View):
 class MyDetail(View):
     def get(self, request, *args, **kwargs):
         user_data = request.user
-        # tweet_counts = Tweet.objects.filter(user_id=user_data).count()
+        tweet_counts = Tweet.objects.filter(user_id=user_data).count()
         comments_on_tweet_count = CommentsAndStatus.objects.filter(user_id=user_data).values("status").annotate(count=models.Count('status'))
         print(f'comments_on_tweet_count ==> {comments_on_tweet_count}')
 
