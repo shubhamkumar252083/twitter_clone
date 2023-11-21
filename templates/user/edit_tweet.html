@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<h2>Edit</h2>
+  <form method="post" action="{% url 'UserEditTweet' object_id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save Changes</button>
+  </form>
+{% endblock %}
+
+

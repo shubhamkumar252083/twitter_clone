@@ -13,3 +13,21 @@ class LoginForm(forms.Form):
             attrs={'class': 'form-control', 'placeholder': 'Your Password'})
         )
 
+
+class AddTweetForm(forms.Form):
+    tweet = forms.CharField(
+        max_length = 200,
+        label='tweet'
+        )
+
+class SearchTweetForm(forms.Form):
+    search_tweet = forms.CharField(
+        max_length = 200,
+        label='search_tweet'
+        )
+
+class EditTweetForm(forms.Form):
+    edit_tweet = forms.CharField(
+        max_length = 200,
+        label='edit_tweet'
+        )

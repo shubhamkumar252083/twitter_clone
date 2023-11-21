@@ -9,6 +9,7 @@
         {{ tweet.id }} ==> {{ tweet.tweet }}
         <br>Created at -
         <strong>{{ tweet.created_datetime }}</strong>
+        <a href="{% url 'UserEditTweet' tweet.id %}">Edit</a>
       </li>
     </ul>
 {% endfor %}
@@ -31,5 +32,21 @@
       {% endif %}
   </span>
 </div>
+
+
+<form method="post" action="{% url 'UserTweets' %}">
+  {% csrf_token %}
+  {{ add_tweet.as_p }}
+  <button type="submit">Submit</button>
+</form>
+
+<h1>search tweet</h1>
+<form method="post" action="{% url 'UserTweets' %}">
+  {% csrf_token %}
+  {{ search_tweet.as_p }}
+  <button type="submit">Submit</button>
+</form>
+
+
 
 {% endblock %}
