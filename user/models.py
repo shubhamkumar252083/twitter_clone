@@ -61,7 +61,7 @@ class User(AbstractBaseUser):
         max_length=100, unique=True, db_column="fld_mobile")
     password = models.CharField(max_length=255, db_column="fld_password")
     raw_password = models.CharField(max_length=25, default="", db_column="fld_raw_password")
-    follows = models.ManyToManyField('self', related_name='followers', symmetrical=False, db_column="fld_followers")
+    follows = models.ManyToManyField('self', related_name='followers', symmetrical=False, db_column="fld_followers", db_table='tbl_user_follows')
     created_datetime = models.DateTimeField(
         auto_now_add=True, blank=True, null=True, db_column="fld_created_datetime")
     updated_at = models.DateTimeField(auto_now=True, db_column="fld_updated_at")
