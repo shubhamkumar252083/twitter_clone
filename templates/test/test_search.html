@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'navbar.html' %}
+
+<div>
+  <form method="post" action="{% url 'TestTweet' %}" id="search-form">
+    {% csrf_token %}
+    <!-- Your search form fields go here -->
+    <input type="text" name="search_query" value="{{ search_query }}" />
+    <input type="submit" />
+  </form>
+</div>
+
+<div>
+  {% for tweet in tweets %}
+    <ul>
+      <li>
+        {{ tweet.id }} ==> {{ tweet.tweet }}
+        <br>Created at -
+        <strong>{{ tweet.created_datetime }}</strong>
+        <a href="{% url 'UserEditTweet' tweet.id %}">Edit</a>
+      </li>
+    </ul>
+  {% endfor %}
+</div>
+
+<div class="pagination">
+  <span class="step-links">
+    {% if tweets.has_previous %}
+      <a href="#" onclick="updateFormAction(1)">&laquo; first</a>
+      <a href="#" onclick="updateFormAction({{ tweets.previous_page_number }})">previous</a>
+    {% endif %}
+
+    <span class="current">
+      Page {{ tweets.number }} of {{ tweets.paginator.num_pages }}.
+    </span>
+
+    {% if tweets.has_next %}
+      <a href="#" onclick="updateFormAction({{ tweets.next_page_number }})">next</a>
+      <a href="#" onclick="updateFormAction({{ tweets.paginator.num_pages }})">last &raquo;</a>
+    {% endif %}
+  </span>
+</div>
+
+<script>
+  function updateFormAction(page) {
+    var form = document.getElementById('search-form');
+    form.action = '{% url "TestTweet" %}?page=' + page;
+    form.submit();
+  }
+</script>
+
+{% endblock %}
+
+

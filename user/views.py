@@ -122,3 +122,35 @@ class HashTags(View):
         search_term = request.GET.get('search_term', '')
         print(f'search_term ==> {search_term}')
         return HttpResponse("ok")
+    
+
+
+
+class TestTweet(View):
+    def get(self, request, format=None):
+        tweets = Tweet.objects.values("id", "tweet","created_datetime").filter().order_by("id")
+        paginator = Paginator(tweets, 10)  # Show 10 items per page
+        page = request.GET.get('page')
+        try:
+            tweet_10 = paginator.page(page)
+        except PageNotAnInteger:
+            tweet_10 = paginator.page(1)
+        except EmptyPage:
+            tweet_10 = paginator.page(paginator.num_pages)
+        return render(request, 'test/test_search.html', context={'tweets': tweet_10})
+    
+    def post(self,request):
+        print(f'data ==> {request.POST}')
+        search_query = request.POST.get("search_query")
+        tweets = Tweet.objects.values("id", "tweet","created_datetime").filter(tweet__icontains=search_query).order_by("id")
+        paginator = Paginator(tweets, 10)  # Show 10 items per page
+        page = request.GET.get('page')
+        # page = 10
+        try:
+            tweet_10 = paginator.page(page)
+        except PageNotAnInteger:
+            tweet_10 = paginator.page(1)
+        except EmptyPage:
+            tweet_10 = paginator.page(paginator.num_pages)
+        return render(request, 'test/test_search.html', context={'tweets': tweet_10, "search_query":search_query})
+    

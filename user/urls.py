@@ -13,6 +13,7 @@ urlpatterns = [
     path('login/', UserLoginView.as_view(), name="login"),
     path('logout/', CustomLogoutView.as_view(), name="logout"),
     path('UserTweets/', UserTweets.as_view(), name="UserTweets"),
+    path('TestTweet/', TestTweet.as_view(), name="TestTweet"),
     path('MyDetail/', MyDetail.as_view(), name="MyDetail"),
     path('HashTags/', HashTags.as_view(), name="HashTags"),
     path('UserEditTweet/<int:tweet_id>/', UserEditTweet.as_view(), name='UserEditTweet'),
