@@ -6,7 +6,8 @@
   <form method="post" action="{% url 'TestTweet' %}" id="search-form">
     {% csrf_token %}
     <!-- Your search form fields go here -->
-    <input type="text" name="search_query" value="{{ search_query }}" />
+    <input type="text" name="search_query" value="{{ d.search_query }}" />
+    <input type="text" name="search_query1" value="{{ d.search_query1 }}" />
     <input type="submit" />
   </form>
 </div>
@@ -23,6 +24,26 @@
     </ul>
   {% endfor %}
 </div>
+
+<div>
+  <h1>your search ==> {{ d }} </h1>
+  <form method="post" action="{% url 'TestTweet' %}" id="search-form3">
+    {% csrf_token %}
+    <input type="hidden" name="search_query" value="{{ d.search_query }}" />
+    <input type="hidden" name="search_query1" value="{{ d.search_query1 }}" />
+    <input type="hidden" name="page_no" id="page_no" value="" />
+    {% for i in btn %}
+    <button type="button" onclick="submitForm('{{ i }}')">{{ i }}</button>
+    {% endfor %}
+  </form>
+</div>
+
+<script>
+  function submitForm(buttonName) {
+    document.getElementById('page_no').value = buttonName;
+    document.getElementById('search-form3').submit();
+  }
+</script>
 
 <div class="pagination">
   <span class="step-links">
@@ -41,7 +62,6 @@
     {% endif %}
   </span>
 </div>
-
 <script>
   function updateFormAction(page) {
     var form = document.getElementById('search-form');
@@ -51,5 +71,3 @@
 </script>
 
 {% endblock %}
-
-

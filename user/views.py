@@ -140,17 +140,24 @@ class TestTweet(View):
         return render(request, 'test/test_search.html', context={'tweets': tweet_10})
     
     def post(self,request):
-        print(f'data ==> {request.POST}')
+        data = request.POST
+        print(f'data ==> {data}')
+        d = {}
         search_query = request.POST.get("search_query")
-        tweets = Tweet.objects.values("id", "tweet","created_datetime").filter(tweet__icontains=search_query).order_by("id")
+        if search_query:tweets = Tweet.objects.values("id", "tweet","created_datetime").filter(tweet__icontains=search_query).order_by("id")
+        else:tweets = Tweet.objects.values("id", "tweet","created_datetime").all().order_by("id")
+
         paginator = Paginator(tweets, 10)  # Show 10 items per page
         page = request.GET.get('page')
         # page = 10
+        if data.get("search_query"):d["search_query"] = data.get("search_query")
+        if data.get("search_query1"): d["search_query1"] = data.get("search_query1")
+        if data.get("page_no"): d["page_no"] = data.get("page_no")
         try:
             tweet_10 = paginator.page(page)
         except PageNotAnInteger:
             tweet_10 = paginator.page(1)
         except EmptyPage:
             tweet_10 = paginator.page(paginator.num_pages)
-        return render(request, 'test/test_search.html', context={'tweets': tweet_10, "search_query":search_query})
+        return render(request, 'test/test_search.html', context={'tweets': tweet_10, "d":d, "btn":list(range(1,11))})
     
